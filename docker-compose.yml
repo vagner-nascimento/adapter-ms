@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    container_name: app
+    ports:
+      - 80:80
+    environment:
+      - LISTEN_PORT=80
+      - AMQP_CONN=amqp://guest:guest@rabbit-mq:5672
+      - AMQP_CONSUMER=consumer1
+      - AMQP_TOPIC=topic1
+    depends_on:
+      - rabbit-mq
+    restart: on-failure
+
+  rabbit-mq:
+    image: rabbitmq:3.6-management-alpine
+    container_name: rabbit-mq
+    ports:
+      - 5672:5672 # Standard AMQP protocol port
+      - 15672:15672 # HTTP management UI

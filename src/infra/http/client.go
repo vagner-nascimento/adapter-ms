@@ -42,8 +42,3 @@ func NewRestClient(baseUrl string, authUrl string) RestClient {
 		restCli: resty.New(),
 	}
 }
-
-/*
-approved := make(map[int]string)
-	approved[1] = "Mary"
-*/

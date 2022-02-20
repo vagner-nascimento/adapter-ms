@@ -11,8 +11,12 @@ services:
       - AMQP_CONN=amqp://guest:guest@rabbit-mq:5672
       - AMQP_CONSUMER=consumer1
       - AMQP_TOPIC=topic1
+      - CONSUMER_AUTH_GRANT_TP=client_credentials
       - CONSUMER_URL=${CONSUMER_HTTP_URL}
       - CONSUMER_AUTH_URL=${CONSUMER_AUTH_URL}
+      - CONSUMER_AUTH_ID=${CONSUMER_AUTH_ID}
+      - CONSUMER_AUTH_SCRET=${CONSUMER_AUTH_SCRET}
+      - CONSUMER_AUTH_ACC_ID=${CONSUMER_AUTH_ACC_ID}
     depends_on:
       - rabbit-mq
     restart: on-failure

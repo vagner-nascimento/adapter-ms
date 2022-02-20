@@ -3,6 +3,7 @@ package presentation
 import (
 	"adapter/src/app"
 	"adapter/src/infra"
+	"encoding/json"
 	"fmt"
 	"os"
 )
@@ -14,8 +15,14 @@ func SubscribeConsumers() <-chan error {
 		handler: func(d []byte) {
 			fmt.Println("consumer data", string(d))
 
-			consAdp := app.NewConsumerAdapter()
-			consAdp.Save(d)
+			var obj interface{}
+			if err := json.Unmarshal(d, &obj); err == nil {
+				consAdp := app.NewConsumerAdapter()
+
+				consAdp.Save(obj)
+			} else {
+				fmt.Println("consumer parse error", err)
+			}
 		},
 	}
 

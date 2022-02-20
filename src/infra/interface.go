@@ -5,7 +5,7 @@ type SubscribeDataHandler interface {
 }
 
 type ConsumerDataHandler interface {
-	Save(data []byte) (interface{}, error)
+	Save(data interface{}) (interface{}, error)
 }
 
 type Consumer interface {

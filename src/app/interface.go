@@ -1,5 +1,5 @@
 package app
 
 type ConsumerHandler interface {
-	Save(data []byte) (interface{}, error)
+	Save(data interface{}) (interface{}, error)
 }

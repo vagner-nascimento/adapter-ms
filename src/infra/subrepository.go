@@ -2,9 +2,7 @@ package infra
 
 import (
 	"adapter/src/infra/amqp"
-	"adapter/src/infra/http"
 	"fmt"
-	"os"
 )
 
 type subRepository struct {
@@ -50,19 +48,5 @@ func (sr *subRepository) SubscribeAll(cs ...Consumer) <-chan error {
 func NewSubscriberRepository() SubscribeDataHandler {
 	return &subRepository{
 		sub: amqp.NewSubscriber(),
-	}
-}
-
-type consRepository struct {
-	cli http.RestClient
-}
-
-func (cr *consRepository) Save(data []byte) (interface{}, error) {
-	return cr.cli.Post(data, "")
-}
-
-func NewCosumerRepository() ConsumerDataHandler {
-	return &consRepository{
-		cli: http.NewRestClient(os.Getenv("CONSUMER_URL"), os.Getenv("CONSUMER_AUTH_URL")),
 	}
 }

@@ -17,7 +17,10 @@ type consAuth struct {
 }
 
 func (cr *consRepository) Save(data interface{}) (interface{}, error) {
-	return cr.cli.Post(data, "")
+	var res consumerResponse
+	err := cr.cli.Post(data, &res, "/")
+
+	return res, err
 }
 
 func NewCosumerRepository() ConsumerDataHandler {

@@ -1,17 +1,15 @@
 package app
 
-import (
-	"adapter/src/infra"
-)
+type consumerAdp struct {
+	useCase consumerUseCase
+}
 
-type consAdp struct{}
-
-func (c *consAdp) Save(data interface{}) (interface{}, error) {
-	repo := infra.NewCosumerRepository()
-
-	return repo.Save(data)
+func (ca *consumerAdp) Save(data interface{}) (interface{}, error) {
+	return ca.useCase.ent.Save(data)
 }
 
 func NewConsumerAdapter() ConsumerHandler {
-	return &consAdp{}
+	return &consumerAdp{
+		useCase: newConsumerUseCase(),
+	}
 }

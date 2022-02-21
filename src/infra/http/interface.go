@@ -1,5 +1,5 @@
 package http
 
 type RestClient interface {
-	Post(body interface{}, path string) (interface{}, error)
+	Post(body interface{}, response interface{}, path string) error
 }

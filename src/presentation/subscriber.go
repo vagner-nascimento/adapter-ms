@@ -19,7 +19,15 @@ func SubscribeConsumers() <-chan error {
 			if err := json.Unmarshal(d, &obj); err == nil {
 				consAdp := app.NewConsumerAdapter()
 
-				consAdp.Save(obj)
+				if res, err := consAdp.Save(obj); err == nil {
+					if bys, err := json.Marshal(res); err == nil {
+						fmt.Println("comsumer processed", string(bys))
+					} else {
+						fmt.Println("comsumer res parse error", err)
+					}
+				} else {
+					fmt.Println("comsumer process error", err)
+				}
 			} else {
 				fmt.Println("consumer parse error", err)
 			}

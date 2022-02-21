@@ -15,4 +15,4 @@
 # vendor/
 
 # Env files
-envs
+env*

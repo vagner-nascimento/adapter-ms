@@ -1,18 +1,15 @@
 version: '3.8'
 
 services:
-  app:
+  adapter:
     build: .
-    container_name: app
-    ports:
-      - 80:80
+    container_name: adapter
     environment:
-      - LISTEN_PORT=80
       - AMQP_CONN=amqp://guest:guest@rabbit-mq:5672
       - AMQP_CONSUMER=consumer1
       - AMQP_TOPIC=topic1
       - CONSUMER_AUTH_GRANT_TP=client_credentials
-      - CONSUMER_URL=${CONSUMER_HTTP_URL}
+      - CONSUMER_URL=${CONSUMER_URL}
       - CONSUMER_AUTH_URL=${CONSUMER_AUTH_URL}
       - CONSUMER_AUTH_ID=${CONSUMER_AUTH_ID}
       - CONSUMER_AUTH_SCRET=${CONSUMER_AUTH_SCRET}
@@ -27,3 +24,14 @@ services:
     ports:
       - 5672:5672 # Standard AMQP protocol port
       - 15672:15672 # HTTP management UI
+
+  boker:
+    image: vagnernasc88/broker-ms:latest
+    container_name: boker
+    ports:
+      - 80:80
+    environment:
+      - LISTEN_PORT=80
+      - AMQP_CONN=amqp://guest:guest@rabbit-mq:5672
+    depends_on:
+      - rabbit-mq
